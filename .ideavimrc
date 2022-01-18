@@ -30,3 +30,5 @@ set surround
 set highlightedyank
 set ignorecase
 
+set clipboard+=unnamed
+
