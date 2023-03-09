@@ -29,6 +29,13 @@ map Q gq
 set surround
 set highlightedyank
 set ignorecase
+set relativenumber
+set number
+
+" disables anoying bell sound
+set visualbell
+
 
 set clipboard+=unnamed
+
 
