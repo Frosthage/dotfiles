@@ -1,0 +1,74 @@
+- hosts: localhost
+  become: yes
+  vars:
+    ansible_user: "{{ lookup('env', 'USER') }}"
+    packages:
+      - vim
+      - git
+      - python3
+      - python3-pip
+      - zsh
+      - curl
+      - nodejs
+      - npm
+      - virtualenv
+      - pavucontrol
+      - i3
+      - ubuntu-drivers-common
+
+  tasks:
+    - name: Install prerequisite packages
+      apt:
+        name: "{{ packages }}"
+
+    - name: Install clipboard-cli package globally
+      npm:
+        name: clipboard-cli
+        global: yes
+
+    - name: Autoinstall ubuntu drivers
+      command: ubuntu-drivers autoinstall
+
+    - name: Confirm .oh-my-zsh directory's existence
+      stat:
+        path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+      register: oh_my_zsh_dir
+
+    - name: Install Oh My Zsh
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && exit
+      args:
+        executable: /bin/bash
+      when: not oh_my_zsh_dir.stat.exists
+
+    - name: Install Rust
+      shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: "$HOME/.cargo/bin/rustc"
+
+    - name: Install Powerlevel10k theme for Oh My ZSH
+      git:
+        repo: 'https://github.com/romkatv/powerlevel10k.git'
+        dest: "{{ ansible_env.HOME }}/.oh-my-zsh/themes/powerlevel10k"
+        update: no
+
+    - name: Set ZSH theme to powerlevel10k
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        regexp: '^ZSH_THEME'
+        line: 'ZSH_THEME="powerlevel10k/powerlevel10k"'
+
+    - name: Create font directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ ansible_env.HOME }}/.local/share/fonts"
+        - "{{ ansible_env.HOME }}/.config/fontconfig/conf.d"
+
+    - name: Download Meslo Nerd Font
+      get_url:
+        url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+        dest: "{{ ansible_env.HOME }}/.local/share/fonts/MesloLGS%20NF%20Regular.ttf"
+
+    - name: Update font cache
+      command: fc-cache -fv
