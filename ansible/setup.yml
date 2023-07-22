@@ -21,6 +21,7 @@
         name: "{{ packages }}"
 
     - name: Install clipboard-cli package globally
+      become: yes
       npm:
         name: clipboard-cli
         global: yes
