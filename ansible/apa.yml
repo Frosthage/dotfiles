@@ -1,0 +1,9 @@
+- hosts: localhost
+  tasks:
+    - name: Print HOME variable
+      debug:
+        var: ansible_env.HOME
+    - name: Install Vim package
+      become: yes
+      apt:
+        name: vim

@@ -1,7 +1,6 @@
 - hosts: localhost
   become: yes
   vars:
-    ansible_user: "{{ lookup('env', 'USER') }}"
     packages:
       - vim
       - git
@@ -18,6 +17,7 @@
 
   tasks:
     - name: Install prerequisite packages
+      become: yes
       apt:
         name: "{{ packages }}"
 
@@ -35,6 +35,7 @@
       register: oh_my_zsh_dir
 
     - name: Install Oh My Zsh
+      become_user: "{{ lookup('env', 'SUDO_USER') }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && exit
       args:
         executable: /bin/bash
