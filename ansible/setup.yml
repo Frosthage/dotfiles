@@ -27,7 +27,12 @@
         global: yes
 
     - name: Autoinstall ubuntu drivers
+      become: yes
       command: ubuntu-drivers autoinstall
+
+    - name: Print HOME variable
+      debug:
+        var: ansible_env.HOME
 
     - name: Confirm .oh-my-zsh directory's existence
       stat:
