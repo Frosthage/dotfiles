@@ -11,7 +11,7 @@ ansible --version
 
 then
 
-```ansible-playbook setup.yml```
+```ansible-playbook setup.yml --ask-become-pass```
 
 I'm sure this is doable in ansible too, but it was a bit of a hassle
 when I implemented the configuration, so I didn't bother. 

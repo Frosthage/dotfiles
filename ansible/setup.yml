@@ -1,7 +1,5 @@
 - hosts: localhost
-  become: yes
   vars:
-    ansible_user: "{{ lookup('env', 'USER') }}"
     packages:
       - vim
       - git
@@ -18,16 +16,23 @@
 
   tasks:
     - name: Install prerequisite packages
+      become: yes
       apt:
         name: "{{ packages }}"
 
     - name: Install clipboard-cli package globally
+      become: yes
       npm:
         name: clipboard-cli
         global: yes
 
     - name: Autoinstall ubuntu drivers
+      become: yes
       command: ubuntu-drivers autoinstall
+
+    - name: Print HOME variable
+      debug:
+        var: ansible_env.HOME
 
     - name: Confirm .oh-my-zsh directory's existence
       stat:
