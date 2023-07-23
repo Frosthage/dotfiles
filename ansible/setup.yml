@@ -18,7 +18,11 @@
       - curl
 
   roles:
-    - role: gantsign.visual-studio-code
+    - geerlingguy.docker
+
+  # doesn't work with ubuntu 23.04
+  #  - role: gantsign.visual-studio-code
+
 
   tasks:
     - name: Install prerequisite packages

@@ -1,2 +1,2 @@
-ansible-galaxy install gantsign.visual-studio-code
-ansible-galaxy collection install community.docker
+# ansible-galaxy install gantsign.visual-studio-code
+ansible-galaxy install geerlingguy.docker
