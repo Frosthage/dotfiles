@@ -84,9 +84,14 @@
       command: fc-cache -fv
 
     - name: Import Microsoft's GPG key
-      apt_key:
+      get_url:
         url: https://packages.microsoft.com/keys/microsoft.asc
-        state: present
+        dest: /tmp/microsoft.gpg
+        mode: '0644'
+
+    - name: Move key to trusted.gpg.d
+      command: cp /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+      become: yes
 
     - name: Add Microsoft's VS Code repository
       become: true
