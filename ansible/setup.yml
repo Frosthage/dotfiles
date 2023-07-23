@@ -19,6 +19,7 @@
 
   roles:
     - geerlingguy.docker
+      become: yes
 
   # doesn't work with ubuntu 23.04
   #  - role: gantsign.visual-studio-code
