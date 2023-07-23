@@ -89,6 +89,7 @@
         state: present
 
     - name: Add Microsoft's VS Code repository
+      become: true
       apt_repository:
         repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
         state: present
