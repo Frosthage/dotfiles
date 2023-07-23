@@ -1,4 +1,5 @@
 - hosts: localhost
+  gather_facts: true
   vars:
     packages:
       - vim
@@ -18,10 +19,12 @@
       - curl
 
   roles:
-    - { role: geerlingguy.docker, become: yes }
+    - { role: webarchitect609.jet_brains_toolbox, become: yes }
 
-  # doesn't work with ubuntu 23.04
-  #  - role: gantsign.visual-studio-code
+  # only LTS version are supported, apparently.
+  #  - { role: geerlingguy.docker, become: yes }
+  #  - gantsign.visual-studio-code
+
 
   tasks:
     - name: Install prerequisite packages

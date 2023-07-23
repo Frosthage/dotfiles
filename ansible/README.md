@@ -22,6 +22,7 @@ also, you need to run
 
 `chsh -s $(which zsh)`
 
+
 todo: install docker, jetbrains apps, vs code etc
 
 
