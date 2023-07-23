@@ -18,7 +18,7 @@
       - curl
 
   roles:
-    - role: gantsign.visual_studio_code
+    - role: gantsign.visual-studio-code
 
   tasks:
     - name: Install prerequisite packages
