@@ -14,6 +14,10 @@
       - i3
       - ubuntu-drivers-common
       - golang
+      - neovim
+      - ca-certificates
+      - curl
+      - gnupg
 
   tasks:
     - name: Install prerequisite packages
@@ -78,3 +82,68 @@
 
     - name: Update font cache
       command: fc-cache -fv
+
+    - name: Import Microsoft's GPG key
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add Microsoft's VS Code repository
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+        state: present
+
+    - name: Install Visual Studio Code
+      apt:
+        name: code
+        state: present
+        update_cache: yes
+
+    - name: Create necessary directory for keyring
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Download Docker's official GPG key
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /tmp/docker.gpg
+
+    - name: Deamor Docker gpg key
+      shell: gpg --dearmor -o /etc/apt/keyrings/docker.gpg /tmp/docker.gpg
+      args:
+        creates: /etc/apt/keyrings/docker.gpg
+
+    - name: Change keyring file permissions
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/docker.gpg
+        mode: '0644'
+
+    - name: Set up Docker repository
+      ansible.builtin.shell:
+        cmd: >-
+          echo "deb [arch=\"$(dpkg --print-architecture)\" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    - name: Install Docker and related packages
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        update_cache: yes
+        state: present
+      become: true
+
+    
+
+
+
+
+
+
+
+
+
