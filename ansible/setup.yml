@@ -13,7 +13,7 @@
       - pavucontrol
       - i3
       - ubuntu-drivers-common
-      - golang
+      - nala
 
   tasks:
     - name: Install prerequisite packages
