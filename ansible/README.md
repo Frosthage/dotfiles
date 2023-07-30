@@ -34,6 +34,8 @@ When running Debian, make sure that `/etc/apt/sources.list` include non-free pac
 deb http://deb.debian.org/debian/ bookworm main non-free-firmware contrib non-free
 deb-src http://deb.debian.org/debian/ bookworm main non-free-firmware contrib non-free
 
+Install `sudo apt install nvidia-driver`
+
 Try executing `xrandr --auto` if laptop monitor is black. 
 
 
