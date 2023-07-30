@@ -27,6 +27,17 @@ todo: install docker, jetbrains apps, vs code etc
 
 The docker file is for testing in a container. 
 
+# Nvidia
+
+When running Debian, make sure that `/etc/apt/sources.list` include non-free packages
+
+deb http://deb.debian.org/debian/ bookworm main non-free-firmware contrib non-free
+deb-src http://deb.debian.org/debian/ bookworm main non-free-firmware contrib non-free
+
+Try executing `xrandr --auto` if laptop monitor is black. 
+
+
+
 
 
 
