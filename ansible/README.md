@@ -38,6 +38,10 @@ Install `sudo apt install nvidia-driver`
 
 Try executing `xrandr --auto` if laptop monitor is black. 
 
+## Detailed NVIDIA install guide:
+
+https://www.linux.org/threads/nvidia-install-guide.48421/
+
 
 
 
